@@ -9,6 +9,11 @@ namespace sharp
    int pay;
 }
 
+void callbyvalue(int value);
+void callbyreference(int &value);
+int display(int a);
+int display(float a);
+
 int main()
 {
    cout << "Hello World!";
@@ -29,8 +34,12 @@ int main()
     * this way we no need to use sharp::pay, directly pay will work*/
 
    //References
+   // Reference is nothing but a const pointer. It is used only to refer existing memory
+   // While declaring references we have to assign, remember this is const pointer.
+   // int &c; --> This is invalid. Reference cannot be NULL.
+   // References are declared with &.
    int a = 10;
-   int &b = a; //references are declared with &. & is used only while declaring
+   int &b = a; //this is equivalent to int *const b = a; in C
 
    cout << "a = " << a << endl;
    cout << "&a = " << &a << endl;
@@ -47,5 +56,40 @@ int main()
     * b = 0x7ffd9f707e64
     * */
 
+   callbyvalue(a);
+   cout << "a = " << a << endl;
+   callbyreference(a);
+   cout << "a = " << a << endl;
+
+   display(a); //calls display(int a)
+   display((float)a); //Calls display(float a)
+   //C++ internally have a strict type check condition and based on that it calls the function.
    return 0;
+}
+
+//Pass by value
+void callbyvalue(int value)
+{
+   value = 1000;
+}
+
+void callbyreference(int &value)
+{
+   value = 900;
+}
+
+//function overloading
+// In C++ multiple functions can be defined with same name as long as
+// number of arguments or/and type of arguments are not same.
+
+int display(int a)
+{
+   cout << "display int" << endl;
+   cout << "a = " << a <<endl;
+}
+
+int display(float a)
+{
+   cout << "display float" << endl;
+   cout << "a = " << a << endl;
 }
